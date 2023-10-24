@@ -20,8 +20,8 @@ import (
 	"strconv"
 	"sync"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/utils"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/evaluation/metrics"
+	"github.com/legendzhouwd/cu_crypto/common/utils"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/evaluation/metrics"
 )
 
 // BinClassValidation performs validation of Binary Classification case
@@ -202,7 +202,9 @@ type multiClassValidation struct {
 
 // NewBinClassValidation creates a BinClassValidation instance to handle binary classification validation.
 // file contains all rows of a file,
-//  and its first row contains just names of feature, and others contain all feature values
+//
+//	and its first row contains just names of feature, and others contain all feature values
+//
 // idName denotes which feature is ID that would be used in sample alignment
 // label denotes name of label feature
 // posClass denotes name of positive class and must be one feature name in `file`
@@ -377,29 +379,31 @@ func (bv *binClassValidation) GetAllAccuracy() (map[int]float64, float64, float6
 // GetReport returns a json bytes of precision, recall, f1, true positive,
 // false positive, true negatives and false negatives for each class, and accuracy.
 // JSON type summary is something like :
-// {
-//	"Metrics": {
-//		"NO": {
-//			"TP": 2,
-//			"FP": 1,
-//			"FN": 1,
-//			"TN": 4,
-//			"Precision": 0.6666666666666666,
-//			"Recall": 0.6666666666666666,
-//			"F1Score": 0.6666666666666666
+//
+//	{
+//		"Metrics": {
+//			"NO": {
+//				"TP": 2,
+//				"FP": 1,
+//				"FN": 1,
+//				"TN": 4,
+//				"Precision": 0.6666666666666666,
+//				"Recall": 0.6666666666666666,
+//				"F1Score": 0.6666666666666666
+//			},
+//			"YES": {
+//				"TP": 4,
+//				"FP": 1,
+//				"FN": 1,
+//				"TN": 2,
+//				"Precision": 0.8,
+//				"Recall": 0.8,
+//				"F1Score": 0.8000000000000002
+//			}
 //		},
-//		"YES": {
-//			"TP": 4,
-//			"FP": 1,
-//			"FN": 1,
-//			"TN": 2,
-//			"Precision": 0.8,
-//			"Recall": 0.8,
-//			"F1Score": 0.8000000000000002
-//		}
-//	},
-//	"Accuracy": 0.75
-//}
+//		"Accuracy": 0.75
+//	}
+//
 // NO and Yes are classes.
 // idx is the index of prediction set (also of validation set) in split folds.
 func (bv *binClassValidation) GetReport(idx int) ([]byte, error) {
@@ -430,29 +434,31 @@ func (bv *binClassValidation) GetReport(idx int) ([]byte, error) {
 // false positive, true negatives and false negatives for each class, and accuracy, over all split folds.
 // key of return is the index of fold
 // and value of return is JSON type summary, something like :
-// {
-//	"Metrics": {
-//		"NO": {
-//			"TP": 2,
-//			"FP": 1,
-//			"FN": 1,
-//			"TN": 4,
-//			"Precision": 0.6666666666666666,
-//			"Recall": 0.6666666666666666,
-//			"F1Score": 0.6666666666666666
+//
+//	{
+//		"Metrics": {
+//			"NO": {
+//				"TP": 2,
+//				"FP": 1,
+//				"FN": 1,
+//				"TN": 4,
+//				"Precision": 0.6666666666666666,
+//				"Recall": 0.6666666666666666,
+//				"F1Score": 0.6666666666666666
+//			},
+//			"YES": {
+//				"TP": 4,
+//				"FP": 1,
+//				"FN": 1,
+//				"TN": 2,
+//				"Precision": 0.8,
+//				"Recall": 0.8,
+//				"F1Score": 0.8000000000000002
+//			}
 //		},
-//		"YES": {
-//			"TP": 4,
-//			"FP": 1,
-//			"FN": 1,
-//			"TN": 2,
-//			"Precision": 0.8,
-//			"Recall": 0.8,
-//			"F1Score": 0.8000000000000002
-//		}
-//	},
-//	"Accuracy": 0.75
-//}
+//		"Accuracy": 0.75
+//	}
+//
 // NO and Yes are classes.
 func (bv *binClassValidation) GetOverallReport() (map[int][]byte, error) {
 	var errRet error
@@ -506,18 +512,20 @@ type reportROCAndAUC struct {
 
 // GetROCAndAUC returns a json bytes of roc's points and auc.
 // JSON type summary is something like :
-// {
-//	"PointsOnROC": [
-//			[0,0,1.9],
-// 			[0,0.1,0.9],
-//			[0,0.2,0.8],
-//			[0.1,0.2,0.7],
-//			[0.1,0.3,0.6],
-//			[0.1,0.4,0.55]，
-//			...
-//		],
-//	"AUC":0.68
-//}
+//
+//	{
+//		"PointsOnROC": [
+//				[0,0,1.9],
+//				[0,0.1,0.9],
+//				[0,0.2,0.8],
+//				[0.1,0.2,0.7],
+//				[0.1,0.3,0.6],
+//				[0.1,0.4,0.55]，
+//				...
+//			],
+//		"AUC":0.68
+//	}
+//
 // PointsOnROC is a [3]float64, represents [FPR, TPR, threshold]([x,y,threshold])
 // idx is the index of prediction set (also of validation set) in split folds.
 func (bv *binClassValidation) GetROCAndAUC(idx int) ([]byte, error) {
@@ -554,18 +562,20 @@ func (bv *binClassValidation) GetROCAndAUC(idx int) ([]byte, error) {
 
 // GetAllROCAndAUC returns a map contains all split folds' json bytes of roc and auc.
 // JSON type summary is something like :
-// {
-//	"PointsOnROC": [
-//			[0,0,1.9],
-// 			[0,0.1,0.9],
-//			[0,0.2,0.8],
-//			[0.1,0.2,0.7],
-//			[0.1,0.3,0.6],
-//			[0.1,0.4,0.55]，
-//			...
-//		],
-//	"AUC":0.68
-//}
+//
+//	{
+//		"PointsOnROC": [
+//				[0,0,1.9],
+//				[0,0.1,0.9],
+//				[0,0.2,0.8],
+//				[0.1,0.2,0.7],
+//				[0.1,0.3,0.6],
+//				[0.1,0.4,0.55]，
+//				...
+//			],
+//		"AUC":0.68
+//	}
+//
 // PointsOnROC is a [3]float64, represents [FPR, TPR, threshold]([x,y,threshold])
 // map's idx is the index of prediction set (also of validation set) in split folds.
 func (bv *binClassValidation) GetAllROCAndAUC() (map[int][]byte, error) {
@@ -629,7 +639,9 @@ type regressionValidation struct {
 
 // NewRegressionValidation creates a RegressionValidation instance to handle regression validation.
 // file contains all rows of a file,
-//  and its first row contains just names of feature, and others contain all feature values
+//
+//	and its first row contains just names of feature, and others contain all feature values
+//
 // idName denotes which feature is ID that would be used in sample alignment
 func NewRegressionValidation(file [][]string, label string, idName string) (RegressionValidation, error) {
 	return &regressionValidation{
@@ -760,7 +772,9 @@ type splitter struct {
 
 // NewSplitter creates a Splitter instance.
 // file contains all rows of a file,
-//  and its first row contains just names of feature, and others contain all feature values.
+//
+//	and its first row contains just names of feature, and others contain all feature values.
+//
 // idName denotes which feature is ID that would be used in sample alignment.
 // label denotes name of label feature.
 func NewSplitter(file [][]string, idName string, label string) Splitter {
@@ -1004,7 +1018,9 @@ func getStdDeviation(score map[int]float64) (float64, float64) {
 
 // NewMultiClassValidation creates a MultiClassValidation instance to handle multi-class classification validation
 // file contains all rows of a file,
-//  and its first row contains just names of feature, and others contain all feature values
+//
+//	and its first row contains just names of feature, and others contain all feature values
+//
 // idName denotes which feature is ID that would be used in sample alignment
 // label denotes name of label feature
 // classes denotes all possible classes in training data set
@@ -1108,33 +1124,35 @@ func (mv *multiClassValidation) GetAllAccuracy() (map[int]float64, float64, floa
 // GetReport returns a json bytes of precision, recall, f1, true positive,
 // false positive, true negatives and false negatives for each class, and accuracy, overall precision, recall f1.
 // JSON type summary is something like :
-// {
-//	"Metrics": {
-//		"class_1": {
-//			"TP": 2,
-//			"FP": 1,
-//			"FN": 1,
-//			"TN": 4,
-//			"Precision": 0.6666666666666666,
-//			"Recall": 0.6666666666666666,
-//			"F1Score": 0.6666666666666666
+//
+//	{
+//		"Metrics": {
+//			"class_1": {
+//				"TP": 2,
+//				"FP": 1,
+//				"FN": 1,
+//				"TN": 4,
+//				"Precision": 0.6666666666666666,
+//				"Recall": 0.6666666666666666,
+//				"F1Score": 0.6666666666666666
+//			},
+//			"class_2": {
+//				"TP": 4,
+//				"FP": 1,
+//				"FN": 1,
+//				"TN": 2,
+//				"Precision": 0.8,
+//				"Recall": 0.8,
+//				"F1Score": 0.8000000000000002
+//			}
+//	     ...
 //		},
-//		"class_2": {
-//			"TP": 4,
-//			"FP": 1,
-//			"FN": 1,
-//			"TN": 2,
-//			"Precision": 0.8,
-//			"Recall": 0.8,
-//			"F1Score": 0.8000000000000002
-//		}
-//      ...
-//	},
-//	"Accuracy": 0.75,
-//  "OverallPrecision": 0.6,
-//  "OverallRecall": 0.5,
-//  "OverallF1Score": 0.8,
-//}
+//		"Accuracy": 0.75,
+//	 "OverallPrecision": 0.6,
+//	 "OverallRecall": 0.5,
+//	 "OverallF1Score": 0.8,
+//	}
+//
 // idx is the index of prediction set (also of validation set) in split folds.
 func (mv *multiClassValidation) GetReport(idx int) ([]byte, error) {
 	predClasses, ok := mv.predClasses.Load(idx)
@@ -1214,25 +1232,27 @@ type overallROCAndAUC struct {
 
 // GetROCAndAUC returns json bytes of a map from class to roc's points and auc, and overall weighted auc
 // JSON type summary is something like :
-//{
-//  "reports":
-//    {
-//      "classA":
-//	      {
-//	        "PointsOnROC": [
-//			  [0,0,1.9],
-//			  [0,0.1,0.9],
-//			  [0,0.2,0.8],
-//			  [0.1,0.2,0.7],
-//			  ...
-//		    ],
-//	        "AUC":0.68
-//        }
-//      "classB":
-//        ...
-//    },
-//  "overallAUC": 0.8
-//}
+//
+//	{
+//	 "reports":
+//	   {
+//	     "classA":
+//		      {
+//		        "PointsOnROC": [
+//				  [0,0,1.9],
+//				  [0,0.1,0.9],
+//				  [0,0.2,0.8],
+//				  [0.1,0.2,0.7],
+//				  ...
+//			    ],
+//		        "AUC":0.68
+//	       }
+//	     "classB":
+//	       ...
+//	   },
+//	 "overallAUC": 0.8
+//	}
+//
 // PointsOnROC is a [3]float64, represents [FPR, TPR, threshold]([x,y,threshold])
 // idx is the index of prediction set (also of validation set) in split folds.
 func (mv *multiClassValidation) GetROCAndAUC(idx int) ([]byte, error) {
@@ -1285,7 +1305,9 @@ func (mv *multiClassValidation) GetROCAndAUC(idx int) ([]byte, error) {
 }
 
 // GetAllROCAndAUC returns a map contains all split folds' json bytes of roc and auc map,
-//  and overall weighted AUC
+//
+//	and overall weighted AUC
+//
 // map's idx is the index of prediction set (also of validation set) in split folds.
 func (mv *multiClassValidation) GetAllROCAndAUC() (map[int][]byte, error) {
 	var errRet error

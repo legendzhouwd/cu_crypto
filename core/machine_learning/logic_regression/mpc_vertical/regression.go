@@ -19,9 +19,9 @@ import (
 	"math/big"
 	"strconv"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/math/homomorphism/paillier"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/math/rand"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
+	"github.com/legendzhouwd/cu_crypto/common/math/homomorphism/paillier"
+	"github.com/legendzhouwd/cu_crypto/common/math/rand"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
 )
 
 // 纵向联合学习，基于半同态加密方案的多元逻辑回归算法
@@ -722,9 +722,10 @@ func CalRidgeRegCost(thetas []float64, trainSetSize int, regParam float64) float
 // 计算本地加密梯度，并提交随机数干扰
 // 参与方A执行同态运算
 // 梯度的计算：Grad(i) = (predictValue(j) - realValue(j))*trainSet[j][i]
-//						= (0.5 + x/4 - y)*x(i) = (0.5 + (preValA + preValB)/4 - y)*x(i)
-//						= (0.5 + preValA/4 + (preValB/4 - y))*x(i)
-//						= x(i)*preValA/4 + x(i)*(0.5 + preValB/4 - y)
+//
+//	= (0.5 + x/4 - y)*x(i) = (0.5 + (preValA + preValB)/4 - y)*x(i)
+//	= (0.5 + preValA/4 + (preValB/4 - y))*x(i)
+//	= x(i)*preValA/4 + x(i)*(0.5 + preValB/4 - y)
 //
 // - localPart 非标签方本地的明文梯度数据
 // - tagPart 标签方的加密梯度数据
@@ -777,9 +778,10 @@ func CalEncLocalGradient(localPart *RawLocalGradAndCostPart, tagPart *EncLocalGr
 // 计算本地加密梯度，并提交随机数干扰
 // 参与方B计算加密梯度信息
 // 梯度的计算：Grad(i) = (predictValue(j) - realValue(j))*trainSet[j][i]
-//						= (0.5 + x/4 - y)*x(i) = (0.5 + (preValA + preValB)/4 - y)*x(i)
-//						= (0.5 + preValA/4 + (preValB/4 - y))*x(i)
-//						= x(i)*preValA/4 + x(i)*(0.5 + preValB/4 - y)
+//
+//	= (0.5 + x/4 - y)*x(i) = (0.5 + (preValA + preValB)/4 - y)*x(i)
+//	= (0.5 + preValA/4 + (preValB/4 - y))*x(i)
+//	= x(i)*preValA/4 + x(i)*(0.5 + preValB/4 - y)
 //
 // - localPart 标签方本地的明文梯度数据
 // - otherPart 非标签方的加密梯度数据
@@ -943,7 +945,7 @@ func CalGradientWithRidgeReg(thetas []float64, gradMap map[int]float64, featureI
 // L2 = λ/2m * (θ(0)^2 + θ(1)^2 + ... + θ(n)^2)
 //
 // 参与方A执行同态运算ln(0.5) + encByB(y - 0.5)*preValA + encByB((y - 0.5)*preValB) - preValA^2/8
-//				- encByB(preValB^2/8) - preValA*encByB(preValB/4) + ranNumA
+//   - encByB(preValB^2/8) - preValA*encByB(preValB/4) + ranNumA
 //
 // - localPart 本地的明文损失数据
 // - tagPart 标签方的加密损失数据
@@ -1014,7 +1016,7 @@ func EvaluateEncLocalCost(localPart *RawLocalGradAndCostPart, tagPart *EncLocalG
 // EvaluateEncLocalCostTag 标签方使用同态运算，根据损失函数来计算当前模型的加密损失
 // TODO 增加泛化支持：
 // 参与方B执行同态运算encCostForB = ln(0.5) + (y - 0.5)*encByA(preValA) + (y - 0.5)*preValB - encByA(preValA^2/8)
-//						- preValB^2/8 - encByA(preValA)*preValB/4 + ranNumB
+//   - preValB^2/8 - encByA(preValA)*preValB/4 + ranNumB
 //
 // - localPart 本地的明文损失数据
 // - otherPart 非标签方的加密损失数据

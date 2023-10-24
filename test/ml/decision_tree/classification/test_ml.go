@@ -20,9 +20,9 @@ import (
 	"log"
 	"strings"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/client/service/xchain"
-	ml_common "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
-	dt_class "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/decision_tree/classification"
+	"github.com/legendzhouwd/cu_crypto/client/service/xchain"
+	ml_common "github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
+	dt_class "github.com/legendzhouwd/cu_crypto/core/machine_learning/decision_tree/classification"
 )
 
 var xcc = new(xchain.XchainCryptoClient)

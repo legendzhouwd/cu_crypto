@@ -16,7 +16,7 @@ package big_polynomial
 import (
 	"math/big"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/math/rand"
+	"github.com/legendzhouwd/cu_crypto/common/math/rand"
 )
 
 type PolynomialClient struct {

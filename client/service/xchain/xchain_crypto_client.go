@@ -17,20 +17,20 @@ import (
 	"crypto/ecdsa"
 	"math/big"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/math/homomorphism/paillier"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/math/rand"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/hash"
+	"github.com/legendzhouwd/cu_crypto/common/math/homomorphism/paillier"
+	"github.com/legendzhouwd/cu_crypto/common/math/rand"
+	"github.com/legendzhouwd/cu_crypto/core/hash"
 
-	ml_common "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
-	dt_class "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/decision_tree/classification"
-	dtc_vertical "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/decision_tree/classification/mpc_vertical"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/linear_regression/gradient_descent"
-	linear_vertical "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/linear_regression/gradient_descent/mpc_vertical"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/logic_regression"
-	logic_vertical "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/logic_regression/mpc_vertical"
+	ml_common "github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
+	dt_class "github.com/legendzhouwd/cu_crypto/core/machine_learning/decision_tree/classification"
+	dtc_vertical "github.com/legendzhouwd/cu_crypto/core/machine_learning/decision_tree/classification/mpc_vertical"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/linear_regression/gradient_descent"
+	linear_vertical "github.com/legendzhouwd/cu_crypto/core/machine_learning/linear_regression/gradient_descent/mpc_vertical"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/logic_regression"
+	logic_vertical "github.com/legendzhouwd/cu_crypto/core/machine_learning/logic_regression/mpc_vertical"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/pdp/merkle"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/pdp/pairing"
+	"github.com/legendzhouwd/cu_crypto/core/pdp/merkle"
+	"github.com/legendzhouwd/cu_crypto/core/pdp/pairing"
 )
 
 type XchainCryptoClient struct {

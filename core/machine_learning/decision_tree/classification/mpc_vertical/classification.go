@@ -20,9 +20,9 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/utils"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/hash"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
+	"github.com/legendzhouwd/cu_crypto/common/utils"
+	"github.com/legendzhouwd/cu_crypto/core/hash"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
 )
 
 // 基于二叉分类决策树的纵向联邦学习

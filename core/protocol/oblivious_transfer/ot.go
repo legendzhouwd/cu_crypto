@@ -19,8 +19,8 @@ import (
 	"errors"
 	"math/big"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/ecies"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/hash"
+	"github.com/legendzhouwd/cu_crypto/core/ecies"
+	"github.com/legendzhouwd/cu_crypto/core/hash"
 )
 
 // 1 of 2 不经意传输协议 - 基于CDH假设和椭圆曲线ECC

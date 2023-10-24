@@ -14,7 +14,7 @@
 package feature_engineering
 
 import (
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/utils"
+	"github.com/legendzhouwd/cu_crypto/common/utils"
 )
 
 // FeatureSelect filter samples with selected features

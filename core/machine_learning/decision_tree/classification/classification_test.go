@@ -16,8 +16,8 @@ package classification
 import (
 	"testing"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/utils"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
+	"github.com/legendzhouwd/cu_crypto/common/utils"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
 )
 
 func TestCalMultiDataSetsGini(t *testing.T) {

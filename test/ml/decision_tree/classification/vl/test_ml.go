@@ -21,9 +21,9 @@ import (
 	"log"
 	"strings"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/client/service/xchain"
-	ml_common "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
-	dtc_vertical "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/decision_tree/classification/mpc_vertical"
+	"github.com/legendzhouwd/cu_crypto/client/service/xchain"
+	ml_common "github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
+	dtc_vertical "github.com/legendzhouwd/cu_crypto/core/machine_learning/decision_tree/classification/mpc_vertical"
 )
 
 var (

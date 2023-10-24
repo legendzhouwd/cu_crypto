@@ -19,7 +19,7 @@ import (
 
 	bls12_381_ecc "github.com/consensys/gnark-crypto/ecc/bls12-381"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/hash"
+	"github.com/legendzhouwd/cu_crypto/core/hash"
 )
 
 // GenerateChallenge generate a random challenge using index numbers for a specified round

@@ -14,7 +14,7 @@
 package main
 
 import (
-	"github.com/PaddlePaddle/PaddleDTX/crypto/client/service/xchain"
+	"github.com/legendzhouwd/cu_crypto/client/service/xchain"
 )
 
 // GetInstance return the default xchain client

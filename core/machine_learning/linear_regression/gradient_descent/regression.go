@@ -17,7 +17,7 @@ import (
 	"log"
 	"math"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
 )
 
 // 基于梯度下降的多元线性回归模型算法
@@ -392,10 +392,10 @@ func predict(thetas []float64, sample []float64) float64 {
 }
 
 // train 模型训练
-// 1. 支持正则化（L2正则或者L1正则），在样本数量偏少，而特征数量偏多的时候，避免过拟合，提升泛化能力
-//    L1更容易得到稀疏解，拥有特征选择的能力
-//    L2控制过拟合的效果比L1更好一些
-// 2. 支持配合交叉验证使用，避免过拟合，提升泛化能力
+//  1. 支持正则化（L2正则或者L1正则），在样本数量偏少，而特征数量偏多的时候，避免过拟合，提升泛化能力
+//     L1更容易得到稀疏解，拥有特征选择的能力
+//     L2控制过拟合的效果比L1更好一些
+//  2. 支持配合交叉验证使用，避免过拟合，提升泛化能力
 //
 // - alpha 梯度下降法的学习率α
 // - amplitude 拟合度delta的目标值
@@ -470,9 +470,11 @@ func train(trainSet [][]float64, alpha float64, amplitude float64, regMode int, 
 // 总特征数量n, 总样本数量m
 // Cost损失函数为J(θ(0),θ(1)...,θ(n))，计算过程如下：
 // for j:=0; j++; j<m
-// {
-//		CostSum += (predictValue(j) - realValue(j))^2
-// }
+//
+//	{
+//			CostSum += (predictValue(j) - realValue(j))^2
+//	}
+//
 // 其中，predictValue(j) = θ(0) + θ(1)*xj(1) + θ(2)*xj(2) + ... + θ(n)*xj(n), realValue(j) = yj
 // predictValue(j) - realValue(j) = θ(0) + w*x(j) - y(j)
 // 参数集合w = [θ(1),θ(2),...,θ(n)]
@@ -589,12 +591,13 @@ func calGradient(thetas []float64, trainSet [][]float64, featureIndex int) float
 // 2. θ<0,则sgn(θ)=-1
 // 3. θ=0,|θ|不可导。那么就只能对该系数θ放弃正则化，因此可以定义当θ=0时,sgn(θ)=0
 // g(i) = (Δ/Δθ(i))*( (1/2m)*SumFromZeroToM((θ(0) + θ(1)*xj(1) + θ(2)*xj(2) + ... + θ(i)*xj(i) + ... + θ(n)*xj(n) - yj)^2)
-//					 + (λ/m)*SumFromZeroToN(|θ(0)| + |θ(1)| + |θ(2)| ... + |θ(j)| + ... + |θ(n)|) )
+//   - (λ/m)*SumFromZeroToN(|θ(0)| + |θ(1)| + |θ(2)| ... + |θ(j)| + ... + |θ(n)|) )
+//
 // 那么，g(i) = (1/2m) * ( SumFromZeroToM((θ(0) + θ(1)*xj(1) + θ(2)*xj(2) + ... + θ(i)*xj(i) + ... + θ(n)*xj(n) - yj)*2*xj(i))
-//						+ 2λ*sgn(θ(i)) )
-//			= (1/2m) * ( SumFromZeroToM((predictValue(j) - realValue(j)) * 2xj(i)) + 2*λ*sgn(θ(i)) )
-//			= (1/m) * ( SumFromZeroToM((predictValue(j) - realValue(j)) * xj(i)) + λ*sgn(θ(i)))
-//			= Grad_new(i)
+//   - 2λ*sgn(θ(i)) )
+//     = (1/2m) * ( SumFromZeroToM((predictValue(j) - realValue(j)) * 2xj(i)) + 2*λ*sgn(θ(i)) )
+//     = (1/m) * ( SumFromZeroToM((predictValue(j) - realValue(j)) * xj(i)) + λ*sgn(θ(i)))
+//     = Grad_new(i)
 //
 // Grad_new(i)的定义在下面会介绍
 //
@@ -603,16 +606,18 @@ func calGradient(thetas []float64, trainSet [][]float64, featureIndex int) float
 // step 3: 结论
 // 计算出w' = (w, θ(0)) = [θ(0),θ(1),θ(2),...,θ(n)]中的每个θ(i)，来得到模型w'
 // for i:=0; i++; i<n
-// {
-// 		// 计算第i个特征的参数θ(i):
-//		θ(i) = θ(i) − α*Grad_new(i)
-// }
+//
+//	{
+//			// 计算第i个特征的参数θ(i):
+//			θ(i) = θ(i) − α*Grad_new(i)
+//	}
 //
 // 第i个特征的Grad_new(i):
 // for j:=0; j++; i<m
-// {
-//	Grad_new(i) += (predictValue(j) - realValue(j))*trainSet[j][i]
-// }
+//
+//	{
+//		Grad_new(i) += (predictValue(j) - realValue(j))*trainSet[j][i]
+//	}
 //
 // Grad_new(i) = (Grad_new(i) + λ*sgn(θ(i)))/m
 //
@@ -645,12 +650,13 @@ func calGradientWithLassoReg(thetas []float64, trainSet [][]float64, featureInde
 // 令g(i) = ΔJ_new(θ(0),θ(1)...,θ(n))/Δθ(i)，其中i为特征维度的index，也就是0,1,2,...,n
 // j为样本编号值，从0自增到总样本数量m，i为特征维度的index
 // g(i) = (Δ/Δθ(i))*( (1/2m)*SumFromZeroToM((θ(0) + θ(1)*xj(1) + θ(2)*xj(2) + ... + θ(i)*xj(i) + ... + θ(n)*xj(n) - yj)^2)
-//					 + (λ/2m)*SumFromZeroToN(θ(0)^2 + θ(1)^2 + ... + θ(j)^2 + ... + θ(n)^2) )
+//   - (λ/2m)*SumFromZeroToN(θ(0)^2 + θ(1)^2 + ... + θ(j)^2 + ... + θ(n)^2) )
+//
 // 那么，g(i) = (1/2m) * ( SumFromZeroToM((θ(0) + θ(1)*xj(1) + θ(2)*xj(2) + ... + θ(i)*xj(i) + ... + θ(n)*xj(n) - yj)*2*xj(i))
-//						+ λ*2*θ(i) )
-//			= (1/2m) * ( SumFromZeroToM((predictValue(j) - realValue(j)) * 2xj(i)) + 2*λ*θ(i) )
-//			= (1/m) * ( SumFromZeroToM((predictValue(j) - realValue(j)) * xj(i)) + λ*θ(i))
-//			= Grad_new(i)
+//   - λ*2*θ(i) )
+//     = (1/2m) * ( SumFromZeroToM((predictValue(j) - realValue(j)) * 2xj(i)) + 2*λ*θ(i) )
+//     = (1/m) * ( SumFromZeroToM((predictValue(j) - realValue(j)) * xj(i)) + λ*θ(i))
+//     = Grad_new(i)
 //
 // Grad_new(i)的定义在下面会介绍
 //
@@ -659,16 +665,18 @@ func calGradientWithLassoReg(thetas []float64, trainSet [][]float64, featureInde
 // step 3: 结论
 // 计算出w' = (w, θ(0)) = [θ(0),θ(1),θ(2),...,θ(n)]中的每个θ(i)，来得到模型w'
 // for i:=0; i++; i<n
-// {
-// 		// 计算第i个特征的参数θ(i):
-//		θ(i) = θ(i) − α*Grad_new(i)
-// }
+//
+//	{
+//			// 计算第i个特征的参数θ(i):
+//			θ(i) = θ(i) − α*Grad_new(i)
+//	}
 //
 // 第i个特征的Grad_new(i):
 // for j:=0; j++; i<m
-// {
-//	Grad_new(i) += (predictValue(j) - realValue(j))*trainSet[j][i]
-// }
+//
+//	{
+//		Grad_new(i) += (predictValue(j) - realValue(j))*trainSet[j][i]
+//	}
 //
 // Grad_new(i) = (Grad_new(i) + λ*θ(i))/m
 //

@@ -17,8 +17,8 @@ import (
 	"encoding/json"
 	"log"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/client/service/xchain"
-	ml_common "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
+	"github.com/legendzhouwd/cu_crypto/client/service/xchain"
+	ml_common "github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
 )
 
 var xcc = new(xchain.XchainCryptoClient)

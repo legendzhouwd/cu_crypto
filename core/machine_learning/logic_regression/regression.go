@@ -17,7 +17,7 @@ import (
 	"log"
 	"math"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
 )
 
 // 基于梯度下降的多元逻辑回归模型算法
@@ -396,9 +396,11 @@ func train(trainSet [][]float64, alpha float64, amplitude float64, regMode int, 
 // J(θ)=-1/m*CostSum(hθ(x(j)),y(j))
 //
 // for j:=0; j++; j<m
-// {
-//		CostSum += y(j)*log(hθ(x(j)) + (1-y(j))*log(1-hθ(x(j)))
-// }
+//
+//	{
+//			CostSum += y(j)*log(hθ(x(j)) + (1-y(j))*log(1-hθ(x(j)))
+//	}
+//
 // 其中，y的值总是为0或者为1
 //
 // hθ(x(j)) = 1/(1+e^-(w'x)) = 1/(1+e^-(θ(0) + θ(1)*x(1) + θ(2)*x(2) + ... + θ(n)*x(n)))
@@ -498,16 +500,18 @@ func evaluateCostWithRidgeReg(thetas []float64, trainSet [][]float64, regParam f
 // 根据上文计算损失函数时的介绍：
 // 计算出w' = (w, θ(0)) = [θ(0),θ(1),θ(2),...,θ(n)]中的每个θ(i)，来得到模型w'
 // for i:=0; i++; i<n
-// {
-// 		// 计算第i个特征的参数θ(i):
-//		θ(i) = θ(i) − α*Grad(i)
-// }
+//
+//	{
+//			// 计算第i个特征的参数θ(i):
+//			θ(i) = θ(i) − α*Grad(i)
+//	}
 //
 // 第i个特征的Grad(i):
 // for j:=0; j++; i<m
-// {
-//	Grad(i) += (predictValue(j) - realValue(j))*trainSet[j][i]
-// }
+//
+//	{
+//		Grad(i) += (predictValue(j) - realValue(j))*trainSet[j][i]
+//	}
 //
 // predictValue(j) = hθ(x(j)) = 1/(1+e^-(w'x)) = 1/(1+e^-(θ(0) + θ(1)*x(1) + θ(2)*x(2) + ... + θ(n)*x(n)))
 //

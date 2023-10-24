@@ -20,8 +20,8 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/utils"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
+	"github.com/legendzhouwd/cu_crypto/common/utils"
+	"github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
 )
 
 // 基于CART的二叉分类决策树
@@ -781,16 +781,19 @@ func checkTree(tree *CTree) bool {
 	return checkTree(leftTree) && checkTree(rightTree)
 }
 
-/* 树的可视化, return
-				           ———是———>【leaf1】
-		        node1[=1]《
-			是	           ———否———>【leaf2】
+/*
+	 树的可视化, return
+					           ———是———>【leaf1】
+			        node1[=1]《
+				是	           ———否———>【leaf2】
+
 root[=1]《
-						                    ———是———>【leaf3】
-				                node3[=3]《
-			否			    是              ———否———>【leaf4】
-		        node2[=2]《
-				            ————否——>【leaf5】
+
+					                    ———是———>【leaf3】
+			                node3[=3]《
+		否			    是              ———否———>【leaf4】
+	        node2[=2]《
+			            ————否——>【leaf5】
 */
 func treeGraph(tree *CTree) {
 	// depth := countTreeDepth(tree)

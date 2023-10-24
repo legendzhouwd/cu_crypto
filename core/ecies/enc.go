@@ -18,8 +18,8 @@ import (
 	"crypto/rand"
 	"fmt"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/core/config"
-	libecies "github.com/PaddlePaddle/PaddleDTX/crypto/core/ecies/libecies"
+	"github.com/legendzhouwd/cu_crypto/core/config"
+	libecies "github.com/legendzhouwd/cu_crypto/core/ecies/libecies"
 )
 
 // Encrypt 非对称加密

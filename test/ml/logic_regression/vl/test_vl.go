@@ -21,9 +21,9 @@ import (
 	"math"
 	"strings"
 
-	"github.com/PaddlePaddle/PaddleDTX/crypto/client/service/xchain"
-	"github.com/PaddlePaddle/PaddleDTX/crypto/common/math/homomorphism/paillier"
-	ml_common "github.com/PaddlePaddle/PaddleDTX/crypto/core/machine_learning/common"
+	"github.com/legendzhouwd/cu_crypto/client/service/xchain"
+	"github.com/legendzhouwd/cu_crypto/common/math/homomorphism/paillier"
+	ml_common "github.com/legendzhouwd/cu_crypto/core/machine_learning/common"
 )
 
 var xcc = new(xchain.XchainCryptoClient)
