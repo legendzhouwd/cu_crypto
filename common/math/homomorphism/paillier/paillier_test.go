@@ -41,7 +41,7 @@ func TestPaillier(t *testing.T) {
 	// 加密数据
 	var x *big.Int
 	// var inputx *big.Int
-	var legency = false
+	// var legency = false
 	for i := 0; i < 999999999999999999; i++ {
 		randX := rand.Intn(max-min+1) + min
 		inputx := big.NewInt(int64(randX))
@@ -58,7 +58,7 @@ func TestPaillier(t *testing.T) {
 			return
 		}
 		// x, err := paillierPrivateKey.Encrypt(big.NewInt(int64(randX)))
-		m := paillierPrivateKey.Decrypt(x, legency)
+		m := paillierPrivateKey.Decrypt(x)
 		tN := new(big.Int).Div(paillierPublicKey.N, big.NewInt(2))
 		tM := new(big.Int).Add(m, tN)
 		tM = new(big.Int).Mod(tM, paillierPublicKey.N)

@@ -121,7 +121,7 @@ func GeneratePrivateKey(primeLength int) (*PrivateKey, error) {
 // 符号表示：E(m1,r1)
 func (publicKey *PublicKey) Encrypt(m *big.Int) (*big.Int, error) {
 	// generate a random r where 0<r<n and ensure gcd(r,n)=1
-	var r = big.NewInt(0)
+	r := big.NewInt(0)
 	var errForR error
 
 	for {
@@ -172,7 +172,7 @@ func (publicKey *PublicKey) Encrypt(m *big.Int) (*big.Int, error) {
 // EncryptSupNegNum 加密负数
 func (publicKey *PublicKey) EncryptSupNegNum(m *big.Int) (*big.Int, error) {
 	// generate a random r where 0<r<n and ensure gcd(r,n)=1
-	var r = big.NewInt(0)
+	r := big.NewInt(0)
 	var errForR error
 
 	for {
