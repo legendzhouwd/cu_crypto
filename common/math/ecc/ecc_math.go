@@ -18,6 +18,8 @@ import (
 	"crypto/sha256"
 	"fmt"
 	"math/big"
+
+	"github.com/legendzhouwd/cu_crypto/core/gm/gmsm/sm3"
 )
 
 // HashToCurve 将字节数组哈希到指定的椭圆曲线上的点
@@ -28,16 +30,21 @@ import (
 // The P-256 curve is defined over the prime field GF(p), where p is:
 // p = 2^256 - 2^224 + 2^192 + 2^96 - 1
 //
+
 // The P-384 curve is defined over the prime field GF(p), where p is:
 // p = 2^384 - 2^128 - 2^96 + 2^32 - 1
 func HashToCurve(msg []byte, curve elliptic.Curve) (*Point, error) {
 	p := curve.Params().P
-
+	var h []byte
 	timesTried := 1
 	for {
 		// 计算哈希值 h = SHA-256(msg)
-		h := sha256.Sum256(msg)
-
+		if curve.Params().Name == "SM2-P-256" {
+			h = sm3.Sm3Sum(msg)
+		} else {
+			ht := sha256.Sum256(msg)
+			h = ht[:]
+		}
 		// 将哈希值转换为 big.Int
 		x := new(big.Int).SetBytes(h[:])
 

@@ -19,8 +19,6 @@ import (
 	"crypto/rand"
 	"encoding/json"
 	"testing"
-
-	"github.com/legendzhouwd/cu_crypto/core/gm/gmsm/sm2"
 )
 
 func TestPSI(t *testing.T) {
@@ -51,24 +49,6 @@ func TestPSI(t *testing.T) {
 	sampleIDsC = append(sampleIDsC, "10010")
 	sampleIDsC = append(sampleIDsC, "10011")
 
-	sm2PrivateKeyA, err := sm2.GenerateKey()
-	if err != nil {
-		t.Errorf("sm2PrivateKeyA generation failed: %v", err)
-	}
-
-	c := sm2PrivateKeyA.Curve
-	_ = c
-	sm2PrivateKeyB, err := sm2.GenerateKey()
-
-	if err != nil {
-		t.Errorf("sm2PrivateKeyB generation failed: %v", err)
-	}
-	sm2PrivateKeyC, err := sm2.GenerateKey()
-
-	if err != nil {
-		t.Errorf("sm2PrivateKeyC generation failed: %v", err)
-	}
-
 	privateKeyA, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
 	if err != nil {
 		t.Errorf("privateKeyA generation failed: %v", err)
@@ -82,30 +62,13 @@ func TestPSI(t *testing.T) {
 		t.Errorf("privateKeyC generation failed: %v", err)
 	}
 
-	sm2encSetA := SM2EncryptSampleIDSet(sampleIDsA, sm2PrivateKeyA)
-	sm2encSetB := SM2EncryptSampleIDSet(sampleIDsB, sm2PrivateKeyB)
-	sm2encSetC := SM2EncryptSampleIDSet(sampleIDsC, sm2PrivateKeyC)
-	_ = sm2encSetC
-
 	encSetA := EncryptSampleIDSet(sampleIDsA, privateKeyA)
 	encSetB := EncryptSampleIDSet(sampleIDsB, privateKeyB)
 	encSetC := EncryptSampleIDSet(sampleIDsC, privateKeyC)
 
 	// 计算A和B的隐私交集
-	sm2reEncSetB := SM2ReEncryptIDSet(sm2encSetB, sm2PrivateKeyA)
-	sm2reEncSetA := SM2ReEncryptIDSet(sm2encSetA, sm2PrivateKeyB)
-
 	reEncSetB := ReEncryptIDSet(encSetB, privateKeyA)
 	reEncSetA := ReEncryptIDSet(encSetA, privateKeyB)
-
-	var sm2reEncSetOthers []*EncSet
-	sm2reEncSetOthers = append(sm2reEncSetOthers, sm2reEncSetB)
-	sm2intersection := Intersect(sampleIDsA, sm2reEncSetA, sm2reEncSetOthers)
-	sm2jsonIntersection, err := json.Marshal(sm2intersection)
-	if err != nil {
-		t.Errorf("failed to marshal A and B intersection: %v", err)
-	}
-	t.Logf("intersection of A and B is %s", sm2jsonIntersection)
 
 	var reEncSetOthers []*EncSet
 	reEncSetOthers = append(reEncSetOthers, reEncSetB)

@@ -18,7 +18,6 @@ import (
 	"crypto/elliptic"
 
 	"github.com/legendzhouwd/cu_crypto/common/math/ecc"
-	"github.com/legendzhouwd/cu_crypto/core/gm/gmsm/sm2"
 )
 
 // 用于纵向联合学习
@@ -80,29 +79,6 @@ type EncSet struct {
 //
 //	Alice: Pub'Ai=HP(ID-Ai)^Prv'A=HashToCurve(ID-Ai)^Prv'A
 //	  Bob: Pub'Bi=HP(ID-Bi)^Prv'B=HashToCurve(ID-Bi)^Prv'B
-
-func SM2EncryptSampleIDSet(sampleID []string, privateKey *sm2.PrivateKey) *EncSet {
-	curve := privateKey.Curve
-
-	encIDs := make(map[string]int)
-
-	for i := 0; i < len(sampleID); i++ {
-		eccPoint, _ := ecc.HashToCurve([]byte(sampleID[i]), curve)
-
-		newX, newY := curve.ScalarMult(eccPoint.X, eccPoint.Y, privateKey.D.Bytes())
-
-		id := string(elliptic.Marshal(curve, newX, newY))
-
-		encIDs[id] = i
-	}
-
-	encSet := &EncSet{
-		EncIDs: encIDs,
-	}
-
-	return encSet
-}
-
 func EncryptSampleIDSet(sampleID []string, privateKey *ecdsa.PrivateKey) *EncSet {
 	curve := privateKey.Curve
 
@@ -129,31 +105,6 @@ func EncryptSampleIDSet(sampleID []string, privateKey *ecdsa.PrivateKey) *EncSet
 //
 //	Alice: Pub'Bi-A=Pub'Bi^Prv'A=Hash(ID-Bi)*G^Prv'B^Prv'A
 //	  Bob: Pub'Ai-B=Pub'Ai^Prv'B=Hash(ID-Ai)*G^Prv'A^Prv'B
-
-func SM2ReEncryptIDSet(encSet *EncSet, privateKey *sm2.PrivateKey) *EncSet {
-	curve := privateKey.PublicKey.Curve
-
-	//	var encIDs []*ID
-	encIDs := make(map[string]int)
-
-	for idstr, value := range encSet.EncIDs {
-		// Pub'Bi^Prv'A
-		x, y := elliptic.Unmarshal(curve, []byte(idstr))
-
-		newX, newY := curve.ScalarMult(x, y, privateKey.D.Bytes())
-
-		id := string(elliptic.Marshal(curve, newX, newY))
-
-		encIDs[id] = value
-	}
-
-	newEncSet := &EncSet{
-		EncIDs: encIDs,
-	}
-
-	return newEncSet
-}
-
 func ReEncryptIDSet(encSet *EncSet, privateKey *ecdsa.PrivateKey) *EncSet {
 	curve := privateKey.PublicKey.Curve
 
