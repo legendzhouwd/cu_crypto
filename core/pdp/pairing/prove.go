@@ -18,7 +18,6 @@ import (
 	"math/big"
 
 	bls12_381_ecc "github.com/consensys/gnark-crypto/ecc/bls12-381"
-
 	"github.com/legendzhouwd/cu_crypto/core/hash"
 )
 

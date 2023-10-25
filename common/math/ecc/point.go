@@ -17,7 +17,10 @@ import (
 	"crypto/elliptic"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"math/big"
+
+	"github.com/legendzhouwd/cu_crypto/core/gm/gmsm/sm2"
 )
 
 // Point 定义椭圆曲线上的点
@@ -64,6 +67,26 @@ func getECPoint(p *Point) *ECPoint {
 	return point
 }
 
+func NewPointFromString(pointStr string) (*Point, error) {
+	jsonContent := []byte(pointStr)
+	ecPoint := new(ECPoint)
+	err := json.Unmarshal(jsonContent, ecPoint)
+	if err != nil {
+		return nil, err //json有问题
+	}
+
+	curve := elliptic.P256()
+	if ecPoint.CurveName != "P-256" && ecPoint.CurveName != "SM2-P-256" {
+		err = fmt.Errorf("curve [%v] is not supported yet.", ecPoint.CurveName)
+		return nil, err
+	}
+	if ecPoint.CurveName == "SM2-P-256" {
+		curve = sm2.P256Sm2()
+	}
+
+	return NewPoint(curve, ecPoint.X, ecPoint.Y)
+}
+
 // Add 计算两个点的加法
 func (p *Point) Add(p1 *Point) (*Point, error) {
 	x, y := p.Curve.Add(p.X, p.Y, p1.X, p1.Y)
@@ -77,6 +100,13 @@ func (p *Point) ScalarMult(k *big.Int) *Point {
 	newP := newPoint(p.Curve, x, y)
 
 	return newP
+}
+
+func ScalarBaseMult(curve elliptic.Curve, k *big.Int) *Point {
+	x, y := curve.ScalarBaseMult(k.Bytes())
+	p := newPoint(curve, x, y)
+
+	return p
 }
 
 // Equals 判断两个点是否相同

@@ -21,7 +21,6 @@ import (
 
 	bls12_381_ecc "github.com/consensys/gnark-crypto/ecc/bls12-381"
 	bls12_381_fr "github.com/consensys/gnark-crypto/ecc/bls12-381/fr"
-
 	"github.com/legendzhouwd/cu_crypto/core/hash"
 )
 
